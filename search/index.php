@@ -3,8 +3,9 @@
     $search_term = urlencode($_GET["search_term"]);
     $uri = "https://www.brooklynmuseum.org/opencollection/api/?method=collection.search" .
       "&version=1&api_key=" . $_SERVER['OPENCOLLECTION_API_KEY'] . "&format=json&results_limit=10&keyword=" . $search_term . "&name=" . $search_term;
+  
     $bm_json_results = json_decode(file_get_contents($uri));
-
+    //var_dump($bm_json_results);
     $bm_results_count = $bm_json_results->{"response"}->{"resultset"}->total;
   }
 ?>
@@ -16,18 +17,19 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" href="css/main.css">
   <title>Brooklyn Museum OpenCollection API Search Example</title>
 </head>
 <body>
   <form method="get" enctype="application/x-www-form-urlencoded" action="">
     <div id="search_controls">
       <img id="search_icon" src="images/search_icon_32px.png" />
-      <label for="search_term">Search museum collections:</label>
+      <label for="search_term">Search the museum collection:</label>
       <input id="search_term" name="search_term" type="search" />
       <input id="search_submit" type="submit" value="Search" />
     </div>
   </form>
-  <div id="loading_display"><img src="images/ajax_loader.gif" /> Loading...</div>
+  <!--<div id="loading_display"><img src="images/ajax_loader.gif" /> Loading...</div>-->
   <div id="results_container">
   <?php 
     if (count($bm_json_results->{'response'}->{'resultset'}->{'items'}) > 0) {
